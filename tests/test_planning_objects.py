@@ -28,19 +28,19 @@ ops = {op.sequence_number: op for op in [raw_material, machine, pack_and_ship]}
 
 @pytest.fixture
 def router_at_beginning() -> Router:
-    router = Router(operations=ops, current_sequence=10, next_sequence=20)
+    router = Router(operations=ops, current_sequence=10, factory=Mock())
     return router
 
 
 @pytest.fixture
 def router_at_middle() -> Router:
-    router = Router(operations=ops, current_sequence=20, next_sequence=30)
+    router = Router(operations=ops, current_sequence=20, factory=Mock())
     return router
 
 
 @pytest.fixture
 def router_at_end() -> Router:
-    router = Router(operations=ops, current_sequence=30, next_sequence=-1)
+    router = Router(operations=ops, current_sequence=30, factory=Mock())
     return router
 
 
@@ -69,12 +69,7 @@ def test_router_move_next_to_completed(router_at_end: Router):
 
 
 def test_workcenter_dequeue_returns_item():
-    wc = WorkCenter(
-        queue=PriorityQueue(),
-        name="Test Workcenter",
-        prioritizer=Mock(),
-        factory=Mock(),
-    )
+    wc = WorkCenter(name="Test Workcenter", prioritizer=Mock(), factory=Mock(),)
     prior1 = PrioritizedItem(priority=1, item=())
     prior2 = PrioritizedItem(priority=2, item=())
 
@@ -86,22 +81,22 @@ def test_workcenter_dequeue_returns_item():
 
 
 def test_factory_work_in_progress_maintains_order():
-    factory = Factory(PriorityQueue())
-    operation1 = Mock(hours=1)
-    operation2 = Mock(hours=2)
-    operation3 = Mock(hours=0.5)
-    operation4 = Mock(hours=0.25)
+    factory = Factory()
+    operation1 = Mock(wall_clock_hours=1)
+    operation2 = Mock(wall_clock_hours=2)
+    operation3 = Mock(wall_clock_hours=0.5)
+    operation4 = Mock(wall_clock_hours=0.25)
 
-    factory.add_work_in_progress(operation1) # (1, operation1)
-    factory.add_work_in_progress(operation2) # (2, operation2)
-    
+    factory.add_work_in_progress(operation1)  # (1, operation1)
+    factory.add_work_in_progress(operation2)  # (2, operation2)
+
     factory.complete_next()
     # operation1 completed, using 1 hour.
     # operation2 is in work, with 1 hour remaining.
     assert factory.elapsed_hours == 1
 
-    factory.add_work_in_progress(operation3) # (1.5, operation3)
-    factory.add_work_in_progress(operation4) # (1.25, operation3)
+    factory.add_work_in_progress(operation3)  # (1.5, operation3)
+    factory.add_work_in_progress(operation4)  # (1.25, operation3)
     factory.complete_next()
     # operation4 completed, using 0.25 hours.
     # operation2 is in work with 0.75 hours remaining
@@ -116,3 +111,11 @@ def test_factory_work_in_progress_maintains_order():
     factory.complete_next()
     # operation2 completed, using 0.5 hours.
     assert factory.elapsed_hours == 2
+
+
+def test_router_operation_wall_clock_conversion():
+    work_center = Mock(time_passage_ratio=2)
+    operation = RouterOperation(
+        work_center=work_center, router=Mock(), sequence_number=0, hours=10
+    )
+    assert operation.wall_clock_hours == 5
