@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 from queue import PriorityQueue
 from typing import Dict, Union
 
-
 from shop_forecasting.prioritizers import PrioritizedItem, Prioritizer
 from shop_forecasting.util import EventLogger
 

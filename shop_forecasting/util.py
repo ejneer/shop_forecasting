@@ -1,6 +1,3 @@
-from string import Template
-
-
 class EventLogger:
     ROUTER_COMPLETE = "router_complete"
     OPERATION_START = "operation_start"
@@ -11,7 +8,6 @@ class EventLogger:
         self.messages = []
 
     def log_event(self, timestamp, event, planning_object):
-        message = Template("${timestamp}, ${event}, ${object}")
         self.messages.append(
-            message.substitute(timestamp=timestamp, event=event, object=planning_object)
+            {"timestamp": timestamp, "event": event, "planning_object": planning_object}
         )
