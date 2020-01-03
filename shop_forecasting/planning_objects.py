@@ -137,7 +137,7 @@ class Factory:
             PrioritizedItem(operation.wall_clock_hours + self.elapsed_hours, operation)
         )
         self.logger.log_event(
-            self.elapsed_hours, EventLogger.OPERATION_START, operation
+            self.elapsed_hours, EventLogger.OPERATION_STARTED, operation
         )
 
     def complete_next(self) -> bool:
@@ -149,7 +149,7 @@ class Factory:
             time_worked = next_item.priority - self.elapsed_hours
             self.elapsed_hours += time_worked
             self.logger.log_event(
-                self.elapsed_hours, EventLogger.OPERATION_COMPLETE, completed_operation
+                self.elapsed_hours, EventLogger.OPERATION_COMPLETED, completed_operation
             )
             completed_operation.router.advance()
             completed_operation.work_center.free_slot()
@@ -158,9 +158,9 @@ class Factory:
 
     def enqueue_at_workcenter(self, operation: RouterOperation):
         self.logger.log_event(
-            self.elapsed_hours, EventLogger.QUEUED_AT_WORKCENTER, operation
+            self.elapsed_hours, EventLogger.OPERATION_QUEUED, operation
         )
         operation.work_center.enqueue(operation)
 
     def notify_router_complete(self, router: Router):
-        self.logger.log_event(self.elapsed_hours, EventLogger.ROUTER_COMPLETE, router)
+        self.logger.log_event(self.elapsed_hours, EventLogger.ROUTER_COMPLETED, router)
