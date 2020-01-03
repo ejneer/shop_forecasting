@@ -5,9 +5,9 @@ class EventLogger:
     OPERATION_QUEUED = "operated_queued"
 
     def __init__(self):
-        self.messages = []
+        self.events = []
 
     def log_event(self, timestamp, event, planning_object):
-        self.messages.append(
+        self.events.append(
             {"timestamp": timestamp, "event": event, "planning_object": planning_object}
         )
