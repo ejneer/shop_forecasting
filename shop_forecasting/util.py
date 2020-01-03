@@ -1,8 +1,8 @@
 class EventLogger:
-    ROUTER_COMPLETE = "router_complete"
-    OPERATION_START = "operation_start"
-    OPERATION_COMPLETE = "operation_complete"
-    QUEUED_AT_WORKCENTER = "queued_at_workcenter"
+    ROUTER_COMPLETED = "router_completed"
+    OPERATION_STARTED = "operation_started"
+    OPERATION_COMPLETED = "operation_completed"
+    OPERATION_QUEUED = "operated_queued"
 
     def __init__(self):
         self.messages = []
