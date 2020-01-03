@@ -11,7 +11,6 @@ class PrioritizedItem:
     item: Any = field(compare=False)
 
 
-@dataclass
 class Prioritizer(ABC):
     """Interface definition that all prioritizers must implement."""
 
