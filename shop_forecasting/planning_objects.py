@@ -157,10 +157,12 @@ class Factory:
         return False
 
     def enqueue_at_workcenter(self, operation: RouterOperation):
+        """Add an operation to its workcenter's queue."""
         self.logger.log_event(
             self.elapsed_hours, EventLogger.OPERATION_QUEUED, operation
         )
         operation.work_center.enqueue(operation)
 
     def notify_router_complete(self, router: Router):
+        """Log the completion of a router."""
         self.logger.log_event(self.elapsed_hours, EventLogger.ROUTER_COMPLETED, router)
