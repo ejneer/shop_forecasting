@@ -81,7 +81,7 @@ def test_workcenter_dequeue_returns_item():
 
 
 def test_factory_work_in_progress_maintains_order():
-    factory = Factory()
+    factory = Factory(logger=Mock())
     operation1 = Mock(wall_clock_hours=1)
     operation2 = Mock(wall_clock_hours=2)
     operation3 = Mock(wall_clock_hours=0.5)

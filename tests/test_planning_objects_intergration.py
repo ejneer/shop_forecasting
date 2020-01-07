@@ -9,7 +9,8 @@ from shop_forecasting.planning_objects import (
 from shop_forecasting.prioritizers import FifoPrioritizer
 from shop_forecasting.util import EventLogger
 
-factory = Factory()
+event_logger = EventLogger()
+factory = Factory(logger=event_logger)
 
 # define some work centers routers may go through
 inventory = WorkCenter(

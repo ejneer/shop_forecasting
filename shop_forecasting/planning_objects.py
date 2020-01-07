@@ -119,8 +119,8 @@ class Factory:
     a global perspective (i.e. the flow of time).
     """
 
+    logger: EventLogger
     event_queue: "PriorityQueue[PrioritizedItem]" = field(default_factory=PriorityQueue)
-    logger: EventLogger = EventLogger()
     elapsed_hours: float = 0
 
     def add_work_in_progress(self, operation: RouterOperation) -> None:
