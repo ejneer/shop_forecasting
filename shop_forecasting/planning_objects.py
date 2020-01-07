@@ -21,7 +21,7 @@ class RouterOperation:
         )
 
     @property
-    def wall_clock_hours(self):
+    def wall_clock_hours(self) -> float:
         """Convert this operation's workcenter hours into wall clock hours."""
         return self.hours / self.work_center.time_passage_ratio
 
@@ -42,7 +42,7 @@ class Router:
             self.order_number, self.item_number
         )
 
-    def advance(self):
+    def advance(self) -> None:
         """Move the current operation forward if router is not complete."""
         self.current_sequence = self.next_sequence
         if self.current_sequence == self._complete_sentinel:
@@ -58,7 +58,7 @@ class Router:
             return None
 
     @property
-    def next_sequence(self):
+    def next_sequence(self) -> int:
         try:
             return next(
                 seq
@@ -156,13 +156,13 @@ class Factory:
             return True
         return False
 
-    def enqueue_at_workcenter(self, operation: RouterOperation):
+    def enqueue_at_workcenter(self, operation: RouterOperation) -> None:
         """Add an operation to its workcenter's queue."""
         self.logger.log_event(
             self.elapsed_hours, EventLogger.OPERATION_QUEUED, operation
         )
         operation.work_center.enqueue(operation)
 
-    def notify_router_complete(self, router: Router):
+    def notify_router_complete(self, router: Router) -> None:
         """Log the completion of a router."""
         self.logger.log_event(self.elapsed_hours, EventLogger.ROUTER_COMPLETED, router)
