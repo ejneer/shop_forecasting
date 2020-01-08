@@ -2,7 +2,7 @@ class EventLogger:
     ROUTER_COMPLETED = "router_completed"
     OPERATION_STARTED = "operation_started"
     OPERATION_COMPLETED = "operation_completed"
-    OPERATION_QUEUED = "operated_queued"
+    OPERATION_QUEUED = "operation_queued"
 
     def __init__(self):
         self.events = []
