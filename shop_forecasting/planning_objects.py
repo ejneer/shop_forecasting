@@ -16,8 +16,12 @@ class RouterOperation:
     hours: float = 0.0
 
     def __repr__(self) -> str:
-        return "Operation (Router# {}, WorkCenter {}, WCHours {})".format(
-            self.router.order_number, self.work_center.name, self.hours
+        return "Operation (Router [{}-{}], WorkCenter [{}], WCHours [{}], ClockHours [{}])".format(
+            self.router.order_number,
+            self.sequence_number,
+            self.work_center.name,
+            self.hours,
+            self.wall_clock_hours,
         )
 
     @property
@@ -119,7 +123,7 @@ class Factory:
     a global perspective (i.e. the flow of time).
     """
 
-    logger: EventLogger
+    logger: EventLogger = field(default_factory=EventLogger)
     event_queue: "PriorityQueue[PrioritizedItem]" = field(default_factory=PriorityQueue)
     elapsed_hours: float = 0
 
