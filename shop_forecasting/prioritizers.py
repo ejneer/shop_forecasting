@@ -28,3 +28,21 @@ class FifoPrioritizer(Prioritizer):
     def prioritize(self, prioritized_item: PrioritizedItem) -> None:
         prioritized_item.priority = self.queue_count
         self.queue_count += 1
+
+
+class ShortestProcessingTimePrioritizer(Prioritizer):
+    """Prioritize items by shortest processing time, shorter being higher priority."""
+
+    def prioritize(self, prioritized_item: PrioritizedItem) -> None:
+        prioritized_item.priority = prioritized_item.item.hours
+
+
+class EarliestDueDatePrioritizier(Prioritizer):
+    """Prioritizes items based upon a given due date, earlier being higher priority.
+    
+    This relies on the prioritized item having a due_date property of a type
+    that supports equality comparisons.
+    """
+
+    def prioritize(self, prioritized_item: PrioritizedItem) -> None:
+        prioritized_item.priority = prioritized_item.item.due_date
