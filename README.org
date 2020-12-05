@@ -1,2 +1,32 @@
-# Shop Forecasting
+* Shop Forecasting
 Discrete event simulation of a theoretical manufacturing shop.
+
+** Definitions
++ Router :: A collection of manufacturing operations that is carried out during
+  production of a good. Defines the order in which steps should happen, as well
+  as the resources that accomplish those steps.
++ Operation :: A single manufacturing step accomplished by a particular
+  manufacturing resource.
++ Workcenter :: An organizational unit or group of related manufacturing
+  capabilities.  Router operations are completed at (or by) workcenters.
+
+** Keeping Track of Time
+Discrete event simulations must keep track of events as they happen,
+necessitating a way to quantify order. Time is a convenient and familiar metric
+for this. Here, however, time is also used to quantify how much work is to be
+done for a particular operation.
+
+*** Passage of time in a Workcenter
+It is import to understand the distinction between how much work is accomplished
+in a workcenter and how much time passes on a wall clock, as they do not
+necessarily agree. It is possible for an hour to pass on the
+clock and have a workcenter accomplish more than an hours worth of work in that
+time.
+
+For example, an Assembly operation (putting components together) may require 8
+hours of touch labor to complete. If only one person is doing the work, then
+this 8 hours of work would take 8 hours on the clock. If two people are doing
+the work, they could presumably accomplish the task in half the time -- 4 hours.
+Thus it is important to consider the rate at which work may be completed in a
+workcenter, quantified here by the ratio of work completion rate to the time
+elapsed on a clock.
